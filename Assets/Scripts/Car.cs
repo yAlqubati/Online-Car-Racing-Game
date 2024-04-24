@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//hasso
 public class Car : MonoBehaviour
 {
     public float speed = 10f;
@@ -24,7 +23,16 @@ public class Car : MonoBehaviour
 
     public void turn(int direction)
     {
-        Debug.Log("Turning to " + direction + " direction.");
+        //Debug.Log("Turning to " + direction + " direction.");
         turnDirection = direction;
+    }
+
+    // on trigger enter
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Obstacle")
+        {
+            Debug.Log("Car hit an obstacle");
+        }
     }
 }
