@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Car : MonoBehaviour
 {
+    //comment hasso
     public float speed = 10f;
     public float increaseSpeed = 0.1f;
     public int turnDirection;
