@@ -19,7 +19,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_Text roomNameText;
     public TMP_Text errorText;
     // public RoomButton roomButtonPrefab;
-    public List<RoomButton> roomButtons = new List<RoomButton>();
+    // public List<RoomButton> roomButtons = new List<RoomButton>();
 
     void Awake()
     {
@@ -125,4 +125,13 @@ public class Launcher : MonoBehaviourPunCallbacks
         CloseMenuItems();
         roomBrowserScreen.SetActive(true);
     }
+
+    public void CloseBtn()
+    {
+        CloseMenuItems();
+        menuButtons.SetActive(true);
+    }
+
+    
+
 }
