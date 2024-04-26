@@ -29,8 +29,10 @@ public class Car : MonoBehaviour
 
     public void turn(int direction)
     {
-        //Debug.Log("Turning to " + direction + " direction.");
-        turnDirection = direction;
+        if(photonView.IsMine)
+        {
+            turnDirection = direction;
+        }
     }
 
     // on trigger enter
