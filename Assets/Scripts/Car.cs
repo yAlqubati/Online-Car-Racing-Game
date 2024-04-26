@@ -22,8 +22,17 @@ public class Car : MonoBehaviour
             speed += increaseSpeed * Time.deltaTime;
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             transform.Rotate(0f,turnDirection * Time.deltaTime,0f);
+            photonView.RPC("RPC_Move", RpcTarget.Others, transform.position, transform.rotation, speed);
         }
         
+    }
+
+    [PunRPC]
+    void RPC_Move(Vector3 position, Quaternion rotation, float speed)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
+        this.speed = speed;
     }
 
     public void turn(int direction)
