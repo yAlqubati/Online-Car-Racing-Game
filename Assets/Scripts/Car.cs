@@ -19,6 +19,7 @@ public class Car : MonoBehaviourPun
             EnableInputControl();
         }
     }
+    
 
     // Update is called once per frame
     void Update()
