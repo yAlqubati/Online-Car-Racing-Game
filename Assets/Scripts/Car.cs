@@ -8,10 +8,12 @@ public class Car : MonoBehaviourPun
     public float speed = 10f;
     public float increaseSpeed = 0.1f;
     private int turnDirection = 0;
+    public photonView photonView;
 
     // Start is called before the first frame update
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         if (photonView.IsMine)
         {
             // Enable input control only for the local player
