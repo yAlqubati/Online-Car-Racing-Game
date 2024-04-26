@@ -35,13 +35,31 @@ public class Car : MonoBehaviour
         this.speed = speed;
     }
 
-    public void turn(int direction)
+   public void turn(int direction)
+{
+    turnDirection = direction;
+    if(photonView.IsMine)
     {
-        if(photonView.IsMine)
-        {
-            turnDirection = direction;
-        }
+        photonView.RPC("RPC_UpdateTurnDirection", RpcTarget.Others, direction);
     }
+}
+
+[PunRPC]
+void RPC_UpdateTurnDirection(int direction)
+{
+    turnDirection = direction;
+}
+
+void FixedUpdate()
+{
+    if(photonView.IsMine)
+    {
+        speed += increaseSpeed * Time.fixedDeltaTime;
+        transform.Translate(Vector3.forward * Time.fixedDeltaTime * speed);
+        transform.Rotate(0f, turnDirection * Time.fixedDeltaTime, 0f);
+        photonView.RPC("RPC_Move", RpcTarget.Others, transform.position, transform.rotation, speed);
+    }
+}
 
     // on trigger enter
     private void OnTriggerEnter(Collider other)
