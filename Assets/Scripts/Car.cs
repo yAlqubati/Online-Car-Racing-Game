@@ -74,6 +74,7 @@ public class Car : MonoBehaviourPun
     [PunRPC]
     void RPC_UpdateTurnDirection(int direction)
     {
+        Debug.Log("Updating turn direction");
         turnDirection = direction;
     }
 

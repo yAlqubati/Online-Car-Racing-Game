@@ -400,8 +400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   increaseSpeed: 0.1
-  turnDirection: 0
-  photonView: {fileID: 3453938436041286708}
 --- !u!65 &8281388256687798701
 BoxCollider:
   m_ObjectHideFlags: 0
