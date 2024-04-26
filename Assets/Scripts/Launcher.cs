@@ -26,6 +26,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_InputField nameInput;
     private bool hasSetNickName = false;
     public GameObject nameScreen;
+    
 
 
     void Awake()
