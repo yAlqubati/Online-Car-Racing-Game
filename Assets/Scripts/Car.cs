@@ -22,7 +22,6 @@ public class Car : MonoBehaviour
             speed += increaseSpeed * Time.deltaTime;
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             transform.Rotate(0f,turnDirection * Time.deltaTime,0f);
-            photonView = GetComponent<PhotonView>();
         }
         
     }
