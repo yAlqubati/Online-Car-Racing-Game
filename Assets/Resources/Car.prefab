@@ -96,7 +96,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5153732033829911863}
           m_TargetAssemblyTypeName: Car, Assembly-CSharp
-          m_MethodName: Turn
+          m_MethodName: turn
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5153732033829911863}
           m_TargetAssemblyTypeName: Car, Assembly-CSharp
-          m_MethodName: Turn
+          m_MethodName: turn
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -321,7 +321,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5153732033829911863}
           m_TargetAssemblyTypeName: Car, Assembly-CSharp
-          m_MethodName: Turn
+          m_MethodName: turn
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -337,7 +337,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5153732033829911863}
           m_TargetAssemblyTypeName: Car, Assembly-CSharp
-          m_MethodName: Turn
+          m_MethodName: turn
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -515,6 +515,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   increaseSpeed: 0.1
+  turnDirection: 0
+  photonView: {fileID: 0}
 --- !u!65 &8281388256687798701
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class Car : MonoBehaviourPun
         photonView = GetComponent<PhotonView>();
         
     }
-    
 
     // Update is called once per frame
     void Update()
