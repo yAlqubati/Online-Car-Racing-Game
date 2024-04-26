@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 public class Car : MonoBehaviour
 {
+    //testing
     public float speed = 10f;
     public float increaseSpeed = 0.1f;
     public int turnDirection;
