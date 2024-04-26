@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.UI;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     public static Launcher instance;
@@ -26,7 +27,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_InputField nameInput;
     private bool hasSetNickName = false;
     public GameObject nameScreen;
-    
+    // the game scene
+    public string levelToPlay;
 
 
     void Awake()
@@ -44,6 +46,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         CloseMenuItems();
         loadingScreen.SetActive(true);
         loadingText.text = "Connecting to server...";
@@ -206,8 +209,13 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("Game");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // Start the game for all players
+            PhotonNetwork.LoadLevel(levelToPlay);
+        }
     }
+
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
