@@ -15,11 +15,13 @@ public class Car : MonoBehaviourPun
     void Start()
     {
         photonView = GetComponent<PhotonView>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (photonView.IsMine)
         {
             speed += increaseSpeed * Time.deltaTime;
@@ -33,9 +35,9 @@ public class Car : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            // Update turn direction locally
             turnDirection = direction;
         }
+            
     }
 
 

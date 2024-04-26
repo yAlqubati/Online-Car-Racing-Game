@@ -6,17 +6,22 @@ using Photon.Pun;
 public class SpawnPlayers : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public GameObject playerPrefab2;
-    // Start is called before the first frame update
+    public GameObject secondPlayerPrefab;
+    
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate(playerPrefab2.name, new Vector3(0, 0, 0), Quaternion.identity);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("Name: " + PhotonNetwork.LocalPlayer.NickName);
+                PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
+            }
+            else
+            {
+                Debug.Log("Name: " + PhotonNetwork.LocalPlayer.NickName);
+                PhotonNetwork.Instantiate(secondPlayerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
+            }
         }
     }
 }
