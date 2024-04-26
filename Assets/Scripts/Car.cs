@@ -2,31 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class Car : MonoBehaviour
+
+public class Car : MonoBehaviourPun
 {
     public float speed = 10f;
     public float increaseSpeed = 0.1f;
-    public int turnDirection;
-    public PhotonView photonView;
+    private int turnDirection = 0;
+    private bool isLocalPlayer = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        photonView = GetComponent<PhotonView>();
+        if (photonView.IsMine)
+        {
+            isLocalPlayer = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(photonView.IsMine)
+        if (isLocalPlayer)
         {
-            speed += increaseSpeed * Time.deltaTime;
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            transform.Rotate(0f,turnDirection * Time.deltaTime,0f);
-            photonView.RPC("RPC_Move", RpcTarget.Others, transform.position, transform.rotation, speed);
+            HandleInput();
+            Move();
         }
-        
     }
 
+    // Handle input for turning
+    private void HandleInput()
+    {
+        turnDirection = Mathf.RoundToInt(Input.GetAxisRaw("Horizontal"));
+    }
+
+    // Move the car
+    private void Move()
+    {
+        speed += increaseSpeed * Time.deltaTime;
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        transform.Rotate(0f, turnDirection * Time.deltaTime, 0f);
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPC_Move", RpcTarget.Others, transform.position, transform.rotation, speed);
+        }
+    }
+
+    // Synchronize position, rotation, and speed across the network
     [PunRPC]
     void RPC_Move(Vector3 position, Quaternion rotation, float speed)
     {
@@ -35,36 +60,27 @@ public class Car : MonoBehaviour
         this.speed = speed;
     }
 
-   public void turn(int direction)
-{
-    turnDirection = direction;
-    if(photonView.IsMine)
+    // Handle turning
+    public void Turn(int direction)
     {
-        photonView.RPC("RPC_UpdateTurnDirection", RpcTarget.Others, direction);
+        turnDirection = direction;
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPC_UpdateTurnDirection", RpcTarget.Others, direction);
+        }
     }
-}
 
-[PunRPC]
-void RPC_UpdateTurnDirection(int direction)
-{
-    turnDirection = direction;
-}
-
-void FixedUpdate()
-{
-    if(photonView.IsMine)
+    // Update turn direction for remote players
+    [PunRPC]
+    void RPC_UpdateTurnDirection(int direction)
     {
-        speed += increaseSpeed * Time.fixedDeltaTime;
-        transform.Translate(Vector3.forward * Time.fixedDeltaTime * speed);
-        transform.Rotate(0f, turnDirection * Time.fixedDeltaTime, 0f);
-        photonView.RPC("RPC_Move", RpcTarget.Others, transform.position, transform.rotation, speed);
+        turnDirection = direction;
     }
-}
 
-    // on trigger enter
+    // On trigger enter
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Obstacle")
+        if (other.gameObject.tag == "Obstacle")
         {
             Debug.Log("Car hit an obstacle");
         }
