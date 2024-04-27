@@ -27,7 +27,7 @@ public class Car : MonoBehaviour
     public TMP_Text timerText;
     public float timeLeft = 20f;
     // Start is called before the first frame update
-    
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -88,7 +88,7 @@ void FixedUpdate()
 }
 
     // on trigger enter
-   private void OnTriggerEnter(Collider other)
+   private async void OnTriggerEnter(Collider other)
 {
     if (other.gameObject.CompareTag("PowerUp")) // Check if the collider is tagged as "PowerUp"
     {
@@ -119,9 +119,15 @@ void FixedUpdate()
 
     else if(other.gameObject.CompareTag("Ship"))
     {
-        // load next scene
+        await AddScore();
         PhotonNetwork.LoadLevel("LeaderBoard");
     }
 }
+
+    public async Task AddScore()
+    {
+        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync("Race_Game", timeLeft);
+        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+    }
 
 }
