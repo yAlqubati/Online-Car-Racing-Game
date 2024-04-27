@@ -5,6 +5,15 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using UnityEngine.UI;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Leaderboards;
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Leaderboards;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     public static Launcher instance;
@@ -31,8 +40,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     public string levelToPlay;
 
 
-    void Awake()
+    async void Awake()
     {
+        await UnityServices.InitializeAsync();
+
+        await SignInAnonymously();
+
         if(instance == null)
         {
             instance = this;
@@ -318,5 +331,18 @@ public class Launcher : MonoBehaviourPunCallbacks
         Application.Quit();
     }
     
+    async Task SignInAnonymously()
+    {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+        };
+        AuthenticationService.Instance.SignInFailed += s =>
+        {
+            // Take some action here...
+            Debug.Log(s);
+        };
 
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
 }
