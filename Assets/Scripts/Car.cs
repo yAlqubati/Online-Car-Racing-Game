@@ -5,8 +5,8 @@ using Photon.Pun;
 public class Car : MonoBehaviour
 {
     //testing
-    public float speed = 10f;
-    public float increaseSpeed = 0.1f;
+    public float speed = 5f;
+    public float increaseSpeed = 0.0f;
     public int turnDirection;
     public PhotonView photonView;
     // Start is called before the first frame update
@@ -63,11 +63,34 @@ void FixedUpdate()
 }
 
     // on trigger enter
-    private void OnTriggerEnter(Collider other)
+   private void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("PowerUp")) // Check if the collider is tagged as "PowerUp"
     {
-        if(other.gameObject.tag == "Obstacle")
-        {
-            Debug.Log("Car hit an obstacle");
-        }
+        speed += 3f; // Increase speed by 3 units
+        Destroy(other.gameObject); // Destroy the power-up object
+        Debug.Log("Power up collected! Speed increased.");
     }
+    else if (other.gameObject.CompareTag("BigShip")) // Check if the collider is tagged as "BigShip"
+    {
+        if(speed > 4)
+        {
+            speed -= 4f; // Reduce speed by 4 units
+            Debug.Log("Car hit a BigShip");
+            
+        }
+        Destroy(other.gameObject); // Destroy the BigShip object
+    }
+    else if (other.gameObject.CompareTag("SmallShip")) // Check if the collider is tagged as "SmallShip"
+    {
+        if(speed > 4)
+        {
+            speed -= 2f; // Reduce speed by 2 units
+            Debug.Log("Car hit a SmallShip");
+            
+        }
+        Destroy(other.gameObject); // Destroy the SmallShip object
+    }
+}
+
 }
