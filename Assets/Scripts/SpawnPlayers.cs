@@ -20,6 +20,6 @@ public class SpawnPlayers : MonoBehaviour
         {
             // spawn the second player prefab
             PhotonNetwork.Instantiate(SecondPlayerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
-        }
+        }   
     }
 }

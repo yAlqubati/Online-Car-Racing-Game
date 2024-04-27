@@ -2,6 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using Unity.Services.Leaderboards;
+using Unity.Services.Authentication;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.Services.Leaderboards;
+using Unity.Services.Authentication;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 public class Car : MonoBehaviour
 {
     //testing
@@ -9,6 +23,9 @@ public class Car : MonoBehaviour
     public float increaseSpeed = 0.0f;
     public int turnDirection;
     public PhotonView photonView;
+    // text for timer
+    public TMP_Text timerText;
+    public float timeLeft = 20f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +37,13 @@ public class Car : MonoBehaviour
     {
         if(photonView.IsMine)
         {
+            timeLeft -= Time.deltaTime;
+            timerText.text = timeLeft.ToString("0");
+            if(timeLeft < 0)
+            {
+                timeLeft = 0;
+            }
+            
             speed += increaseSpeed * Time.deltaTime;
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             transform.Rotate(0f,turnDirection * Time.deltaTime,0f);
@@ -37,13 +61,13 @@ public class Car : MonoBehaviour
     }
 
    public void turn(int direction)
-{
-    turnDirection = direction;
-    if(photonView.IsMine)
     {
-        photonView.RPC("RPC_UpdateTurnDirection", RpcTarget.Others, direction);
+        turnDirection = direction;
+        if(photonView.IsMine)
+        {
+            photonView.RPC("RPC_UpdateTurnDirection", RpcTarget.Others, direction);
+        }
     }
-}
 
 [PunRPC]
 void RPC_UpdateTurnDirection(int direction)
@@ -91,6 +115,18 @@ void FixedUpdate()
         }
         Destroy(other.gameObject); // Destroy the SmallShip object
     }
+
+    else if(other.gameObject.CompareTag("Ship"))
+    {
+        // store it in the leader board
+        AddScore();
+    }
 }
 
+
+ public async void AddScore()
+    {
+        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync("Race_Game", timeLeft);
+        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+    }
 }

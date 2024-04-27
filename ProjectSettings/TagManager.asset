@@ -9,6 +9,7 @@ TagManager:
   - PowerUp
   - BigShip
   - SmallShip
+  - Ship
   layers:
   - Default
   - TransparentFX

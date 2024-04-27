@@ -5,6 +5,10 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using UnityEngine.UI;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Leaderboards;
+using System.Threading.Tasks;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     public static Launcher instance;
@@ -44,8 +48,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        await UnityServices.InitializeAsync();
+       await SignInAnonymously();
         PhotonNetwork.AutomaticallySyncScene = true;
         CloseMenuItems();
         loadingScreen.SetActive(true);
@@ -63,6 +69,20 @@ public class Launcher : MonoBehaviourPunCallbacks
         errorScreen.SetActive(false);
         roomBrowserScreen.SetActive(false);
         nameScreen.SetActive(false);
+    }
+    async Task SignInAnonymously()
+    {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+        };
+        AuthenticationService.Instance.SignInFailed += s =>
+        {
+            // Take some action here...
+            Debug.Log(s);
+        };
+
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
     
