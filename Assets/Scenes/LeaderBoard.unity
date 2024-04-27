@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 663558048}
   - component: {fileID: 663558047}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Name Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,8 +1436,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1621,3 +1621,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a1b7a3f1369c0488b20faf1f3b1f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scores: 
+  namePrefab: {fileID: 663558047}

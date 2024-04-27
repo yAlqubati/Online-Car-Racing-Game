@@ -127,7 +127,6 @@ void FixedUpdate()
     public async Task AddScore()
     {
         var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync("Race_Game",40- (int)timeLeft);
-        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
     }
 
 }

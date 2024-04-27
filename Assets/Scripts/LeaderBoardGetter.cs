@@ -6,12 +6,15 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using UnityEngine;
+using TMPro;
 
 
 public class LeaderBoardGetter : MonoBehaviour
 {
 
     public List<int> scores = new List<int>();
+    // prefab for the name and score
+    public TMP_Text namePrefab;
 
     async void Start()
     {
@@ -28,6 +31,10 @@ public class LeaderBoardGetter : MonoBehaviour
         {
             Debug.Log(user.playerName);
             Debug.Log(user.score);
+
+            namePrefab.text = user.playerName.ToString() + " " + user.score.ToString() + "s";
+            Instantiate(namePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
         }
     }
 
