@@ -520,7 +520,7 @@ MonoBehaviour:
   turnDirection: 0
   photonView: {fileID: 3453938436041286708}
   timerText: {fileID: 6814522327655124102}
-  timeLeft: 20
+  timeLeft: 40
 --- !u!65 &8281388256687798701
 BoxCollider:
   m_ObjectHideFlags: 0

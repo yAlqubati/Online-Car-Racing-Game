@@ -32,11 +32,7 @@ public class LeaderBoard : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    public async void AddScore()
-    {
-        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, 102);
-        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
-    }
+
 
     public async void GetScores()
     {

@@ -10,6 +10,8 @@ using UnityEngine;
 public class LeaderBoardGetter : MonoBehaviour
 {
 
+    public List<int> scores = new List<int>();
+
     async void Start()
     {
         await GetScores();
@@ -17,8 +19,14 @@ public class LeaderBoardGetter : MonoBehaviour
 
     public async Task GetScores()
     {
-        var scoresResponse =
-            await LeaderboardsService.Instance.GetScoresAsync("Race_Game");
-        Debug.Log(JsonConvert.SerializeObject(scoresResponse));
+        var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("Race_Game");
+       var res = JsonConvert.SerializeObject(scoresResponse);
+        Debug.Log(res);
+        foreach (var score in scoresResponse.Results)
+        {
+            scores.Add(score.score);
+        }
+     
     }
+
 }

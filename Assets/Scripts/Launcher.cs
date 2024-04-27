@@ -45,9 +45,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         await UnityServices.InitializeAsync();
 
         await SignInAnonymously();
-        await LeaderboardsService.Instance.AddPlayerScoreAsync("Race_Game", 102);
-        var scoresResponse =
-        await LeaderboardsService.Instance.GetScoresAsync("Race_Game");
+
         if(instance == null)
         {
             instance = this;
