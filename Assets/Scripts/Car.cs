@@ -27,6 +27,7 @@ public class Car : MonoBehaviour
     public TMP_Text timerText;
     public float timeLeft = 20f;
     // Start is called before the first frame update
+    
     void Start()
     {
         photonView = GetComponent<PhotonView>();
