@@ -48,10 +48,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
-        await UnityServices.InitializeAsync();
-       await SignInAnonymously();
         PhotonNetwork.AutomaticallySyncScene = true;
         CloseMenuItems();
         loadingScreen.SetActive(true);
@@ -69,20 +67,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         errorScreen.SetActive(false);
         roomBrowserScreen.SetActive(false);
         nameScreen.SetActive(false);
-    }
-    async Task SignInAnonymously()
-    {
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
-        };
-        AuthenticationService.Instance.SignInFailed += s =>
-        {
-            // Take some action here...
-            Debug.Log(s);
-        };
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
     

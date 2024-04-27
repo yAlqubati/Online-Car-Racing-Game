@@ -118,15 +118,9 @@ void FixedUpdate()
 
     else if(other.gameObject.CompareTag("Ship"))
     {
-        // store it in the leader board
-        AddScore();
+        // load next scene
+        PhotonNetwork.LoadLevel("LeaderBoard");
     }
 }
 
-
- public async void AddScore()
-    {
-        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync("Race_Game", timeLeft);
-        Debug.Log(JsonConvert.SerializeObject(scoreResponse));
-    }
 }
