@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -20,13 +21,29 @@ public class LeaderBoardGetter : MonoBehaviour
     public async Task GetScores()
     {
         var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("Race_Game");
-       var res = JsonConvert.SerializeObject(scoresResponse);
-        Debug.Log(res);
-        foreach (var score in scoresResponse.Results)
+        LeaderboardResult leaderboardData = JsonConvert.DeserializeObject<LeaderboardResult>(JsonConvert.SerializeObject(scoresResponse));
+        Debug.Log(leaderboardData.limit);
+        Debug.Log(leaderboardData.total);
+        foreach (MyPlayer user in leaderboardData.results)
         {
-            scores.Add(score.score);
+            Debug.Log(user.playerName);
+            Debug.Log(user.score);
         }
-     
     }
 
+}
+
+public class LeaderboardResult
+{
+    public int limit { get; set; }
+    public int total { get; set; }
+    public MyPlayer[] results { get; set; }
+}
+
+public class MyPlayer
+{
+    public string playerId { get; set; }
+    public string playerName { get; set; }
+    public int rank { get; set; }
+    public double score { get; set; }
 }
